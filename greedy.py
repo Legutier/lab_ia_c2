@@ -1,3 +1,4 @@
+import random
 from typing import List, Tuple
 from copy import deepcopy
 
@@ -35,6 +36,9 @@ class BackPackGreedySolver(BackpackSolver):
     se representa la mochila como una lista binario [1, 0, 1].
     Se inicializa esta lista con todos sus valores en 0, lo que equivale a no llevar nada
     en la mochila.
+
+    El solver solo construira buscando soluciones factibles, es decir, si no puede entrar nada mas
+    no entrara nada mas en la mochila
     """
 
     def choose_start_point(self) -> int:
@@ -54,7 +58,8 @@ class BackPackGreedySolver(BackpackSolver):
     def shortsighted_function(self, solution: List[int], actual_weight: int, actual_gain: int) -> Tuple[bool, int, int]:
         """"
         Funcion miope, retorna tupla[bool, int] la cual bool indica si ya no puede seguir añadiendo
-        y int el peso actual con la nueva construccion de solucion
+        y int el peso actual con la nueva construccion de solucion, solo añade algo nuevo a la solucion si es
+        factible.
         """
         best_evaluated = (-1, -1)
         for index in range(len(solution)):
@@ -93,3 +98,21 @@ class BackPackGreedySolver(BackpackSolver):
             print(solution, actual_weight, summed_gain)
             finish, actual_weight, summed_gain = self.shortsighted_function(solution, actual_weight, summed_gain)
         return solution, summed_gain
+
+
+class RandomBackPackGreedySolver(BackPackGreedySolver):
+
+    def choose_start_point(self) -> int:
+        """"
+        Escoge un punto de partida aleatorio.
+        Si este punto de partida genera una construccion no factible
+        reintenta hasta quedarse sin opciones, si no las hay arroja ValueNotFoundError
+        """
+        random_start = random.randrange(0, len(self.cost))
+        tries = len(self.cost)
+        while tries:
+            if self.cost[random_start] <= self.maximum_weight:
+                return random_start
+            else:
+                tries -= 1
+        raise ValueNotFoundError

@@ -1,5 +1,5 @@
 from typing import Type
-from greedy import BackPackGreedySolver
+from greedy import BackPackGreedySolver, RandomBackPackGreedySolver
 
 
 def initialize_greedy_from_file(solver: Type[BackPackGreedySolver], filename: str) -> BackPackGreedySolver:
@@ -24,3 +24,5 @@ def initialize_greedy_from_file(solver: Type[BackPackGreedySolver], filename: st
 if __name__ == "__main__":
     solver = initialize_greedy_from_file(solver=BackPackGreedySolver, filename="backpack1")
     print(solver.solve())
+    solver_random = initialize_greedy_from_file(solver=RandomBackPackGreedySolver, filename="backpack1")
+    print(solver_random.solve())

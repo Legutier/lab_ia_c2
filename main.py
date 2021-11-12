@@ -18,7 +18,7 @@ def initialize_greedy_from_file(solver: Type[BackPackGreedySolver], filename: st
         gain, weight = line.strip().split(" ")
         gain_list.append(int(gain))
         weight_list.append(int(weight))
-    return solver(cost=weight_list, gain=gain_list, maximum_weight=int(maximum_weight))
+    return solver(cost=weight_list, gain=gain_list, maximum_weight=int(maximum_weight), elements_qty=int(total_items))
 
 
 if __name__ == "__main__":

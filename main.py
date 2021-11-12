@@ -3,6 +3,12 @@ from greedy import BackPackGreedySolver
 
 
 def initialize_greedy_from_file(solver: Type[BackPackGreedySolver], filename: str) -> BackPackGreedySolver:
+    '''
+    lee archivo y recibe solver para inicializar problema de la mochila
+    :param solver: clase solver a instanciar con archivo
+    :param filename: archivo a leer para instanciar solver
+    :return: instancia de solver entregado
+    '''
     file_ = open(filename)
     lines = file_.readlines()
     total_items, maximum_weight = lines.pop(0).strip().split(" ")
